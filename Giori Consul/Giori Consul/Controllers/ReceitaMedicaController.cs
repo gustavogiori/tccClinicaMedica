@@ -50,7 +50,7 @@ namespace Giori_Consul.Controllers
         {
             ViewBag.ItensReceita = db.ItensReceita.ToList<ItensReceita>();
             ViewBag.IDReceita = new SelectList(db.ReceitaMedicas, "Id", "Id");
-            ViewBag.IDConsulta = Services.ConsultaService.GetConsultaComboBox(db, idSelected);
+            ViewBag.IDConsulta = Services.ConsultaService.GetConsultaComboBox(db.Consultas.ToList(), idSelected);
         }
 
         private void SetIdMedicamento(int[] idsSeleted = null)

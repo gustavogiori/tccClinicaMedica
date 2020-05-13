@@ -7,10 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Giori_Consul.Models;
+using Giori_Consul.Security;
 
 namespace Giori_Consul.Controllers
 {
-    public class EnvioEmailsController : Controller
+    [CustomAuthorize(RoleEnum.Secretaria)]
+    public class EnvioEmailsController : BaseController
     {
         private SqlDbContext db = new SqlDbContext();
 
@@ -53,7 +55,7 @@ namespace Giori_Consul.Controllers
 
         private void SetConsulta(int idSelected = -1)
         {
-            ViewBag.IDConsulta = Services.ConsultaService.GetConsultaComboBox(db, idSelected);
+            ViewBag.IDConsulta = Services.ConsultaService.GetConsultaComboBox(db.Consultas.ToList(), idSelected);
         }
 
         // POST: EnvioEmails/Create

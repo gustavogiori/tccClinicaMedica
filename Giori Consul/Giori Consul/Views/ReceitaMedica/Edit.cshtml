@@ -9,7 +9,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-sec">
-        <h4>Nova Receita Medica</h4>
+        <h4>Editar Receita Medica</h4>
+        <div class="form-group row">
+            <div class="col-md-8">
+                @Html.ActionLink("Imprimir Receita ", "Index", "ImpressaoReceita", new { IdReceita = Model.Id }, new { @class = "btn btn-primary bntCustom" })
+            </div>
+        </div>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

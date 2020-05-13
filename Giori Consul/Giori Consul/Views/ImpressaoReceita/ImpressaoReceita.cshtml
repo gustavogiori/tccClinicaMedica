@@ -1,0 +1,43 @@
+﻿@model Giori_Consul.Models.ReceitaMedica
+
+<br />
+<h2>Data - @Model.Data</h2>
+<br />
+
+<p>
+    <strong> Código:</strong> @Model.Id
+    <br />
+    <strong>Paciente:</strong> @Model.Consulta.Paciente.Nome
+    <br />
+    <strong>Medicamentos:</strong>
+
+
+    <br />
+</p>
+@foreach (var receita in ViewBag.ItensReceita as List<Giori_Consul.Models.ItensReceita>)
+{
+    <p>  @receita.Medicamentos.NomeGenerico -@receita.Medicamentos.NomeFabricante </p>
+    <br />
+
+}
+
+<p>
+    <strong>Instruções:</strong>
+    @Model.Observacao
+    <br />
+    <hr />
+    @Model.Consulta.Medico.Nome
+    <br />
+    @Model.Consulta.Medico.Especialidade
+</p>
+
+
+
+<style>
+    p {
+        font-size: x-large;
+    }
+      #copy {
+        display: none;
+    }
+</style>

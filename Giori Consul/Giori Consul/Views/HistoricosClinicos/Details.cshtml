@@ -1,0 +1,309 @@
+﻿@model Giori_Consul.Models.HistoricosClinicos
+@using Giori_Consul.Models;
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="container ">
+    <!-- Header -->
+    <div class="row header" style="text-align:center;color:green">
+        <h3>Detalhes Histórico Clinico</h3>
+    </div>
+
+    <div id="content">
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#tabGeral" data-toggle="tab">Dados Gerais</a></li>
+            <li><a href="#tabMedicamento" data-toggle="tab">Medicamentos</a></li>
+            <li><a href="#tabExames" data-toggle="tab">Exames Solicitados</a></li>
+            <li><a href="#tabResultados" data-toggle="tab">Resultados</a></li>
+        </ul>
+        <div id="my-tab-content" class="tab-content">
+            <div class="tab-pane  active" id="tabGeral">
+                <div class="row header" style="margin-top: 20px">
+                    <div class="col-md-9">
+
+                        <div class="input-group">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Observacao, htmlAttributes: new { @class = "control-label col-md-4 disabled='disabled'" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(m => m.Observacao, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IDPaciente, htmlAttributes: new { @class = "control-label col-md-4 disabled='disabled'" })
+                                <div class="col-md-10">
+                                    <input type="text" disabled value=@Model.Paciente.Nome class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane" id="tabMedicamento">
+                <div class="row header" style="margin-top: 20px">
+                    @{
+                        var medicamentos = (List<Medicamento>)ViewBag.Medicamentos;
+
+                        var menuActivited = false;
+                        var Activited = false;
+                        <div class="container ">
+                            <div id="content">
+                                <ul id="tabs2" class="nav nav-tabs" data-tabs="tabs">
+
+                                    @foreach (var item in medicamentos)
+                                    {
+                                        string href = "#M" + item.Id;
+                                        if (!menuActivited)
+                                        {
+
+                                            <li class="active"><a href=@href data-toggle="tab">@item.NomeMedicamento</a></li>
+                                            menuActivited = true;
+                                        }
+                                        else
+                                        {
+                                            <li><a href=@href data-toggle="tab">@item.NomeMedicamento</a></li>
+                                        }
+                                    }
+                                </ul>
+                                <div id="my-tab-content2" class="tab-content">
+                                    @foreach (var medicamento in medicamentos)
+                                    {
+                                        string href = "M" + medicamento.Id;
+
+                                        <div class="@(Activited==false ? "tab-pane active":"tab-pane")" id=@href>
+
+                                            <div class="row header" style="margin-top: 20px">
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@medicamento.Id class="form-control " />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.Label("Nome Medicamento", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@medicamento.NomeMedicamento class="form-control " />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Nome Generico", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@medicamento.NomeGenerico class="form-control " />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Nome do Fabricante", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@medicamento.NomeFabricante class="form-control " />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        Activited = true;
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+            <div class="tab-pane" id="tabExames">
+                <div class="row header" style="margin-top: 20px">
+                    @{
+                        var exames = (List<Exames>)ViewBag.Exames;
+
+                        var menuActivitedExame = false;
+                        var ActivitedExame = false;
+                        <div class="container ">
+                            <div id="content">
+                                <ul id="tabs2" class="nav nav-tabs" data-tabs="tabs">
+
+                                    @foreach (var item in exames)
+                                    {
+                                        string href = "#E" + item.IDExame;
+                                        if (!menuActivitedExame)
+                                        {
+
+                                            <li class="active"><a href=@href data-toggle="tab">@item.DataPedido.Value.ToShortDateString()</a></li>
+                                            menuActivitedExame = true;
+                                        }
+                                        else
+                                        {
+                                            <li><a href=@href data-toggle="tab">@item.DataPedido.Value.ToShortDateString()</a></li>
+                                        }
+                                    }
+                                </ul>
+                                <div id="my-tab-content2" class="tab-content">
+                                    @foreach (var exame in exames)
+                                    {
+                                        string href = "E" + exame.IDExame;
+
+                                        <div class="@(ActivitedExame==false ? "tab-pane active":"tab-pane")" id=@href>
+
+                                            <div class="row header" style="margin-top: 20px">
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@exame.IDExame class="form-control " />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.IDPaciente, "Paciente", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@exame.Pacientes.Nome class="form-control " />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Data Pedido", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <input type="text" disabled value=@exame.DataPedido.Value.ToShortDateString() class="form-control " />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Exames Solicitados", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-10">
+                                                            <textarea rows="5" cols="33" disabled class="form-control">@exame.ExamesSolicitados</textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        Activited = true;
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tabResultados">
+                <div class="row header" style="margin-top: 20px">
+                    @{
+                        var examesRealizados = (List<ExamesRealizados>)ViewBag.ExamesRealizados;
+
+                        var menuActivitedExameRealizados = false;
+                        var ActivitedExameRealizados = false;
+                        <div class="container ">
+                            <div id="content">
+                                <ul id="tabs2" class="nav nav-tabs" data-tabs="tabs">
+
+                                    @foreach (var item in examesRealizados)
+                                    {
+                                        string href = "#R" + item.Id;
+                                        if (!menuActivitedExameRealizados)
+                                        {
+
+                                            <li class="active"><a href=@href data-toggle="tab">@item.DataRealizacao.ToShortDateString()</a></li>
+                                            menuActivitedExameRealizados = true;
+                                        }
+                                        else
+                                        {
+                                            <li><a href=@href data-toggle="tab">@item.DataRealizacao.ToShortDateString()</a></li>
+                                        }
+                                    }
+                                </ul>
+                                <div id="my-tab-content2" class="tab-content">
+                                    @if (examesRealizados.Count > 0)
+                                    {
+                                        foreach (var exameRealizado in examesRealizados)
+                                        {
+                                            string href = "R" + exameRealizado.Id;
+
+                                            <div class="@(ActivitedExameRealizados == false ? "tab-pane active" : "tab-pane")" id=@href>
+
+                                                <div class="row header" style="margin-top: 20px">
+                                                    <div class="col-md-9">
+                                                        <div class="form-group">
+                                                            @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <input type="text" disabled value=@exameRealizado.Id class="form-control " />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Código Exame", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <input type="text" disabled value=@exameRealizado.Id class="form-control " />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.IDPaciente, "Paciente", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <input type="text" disabled value=@exameRealizado.Exames.Pacientes.Nome class="form-control " />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Data Pedido", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <input type="text" disabled value=@exameRealizado.Exames.DataPedido.Value.ToShortDateString() class="form-control " />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Data Realização", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <input type="text" disabled value=@exameRealizado.DataRealizacao.ToShortDateString() class="form-control " />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Exames Solicitados", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <textarea rows="5" cols="33" disabled class="form-control">@exameRealizado.Exames.ExamesSolicitados</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Resultados", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-md-10">
+                                                                <textarea rows="5" cols="33" disabled class="form-control">@exameRealizado.Resultados</textarea>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            Activited = true;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <h1>Nenhum resultado de exame cadastrado.</h1>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

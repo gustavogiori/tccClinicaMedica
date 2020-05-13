@@ -1,0 +1,107 @@
+﻿@model Giori_Consul.Models.Consulta
+
+@{
+    ViewBag.Title = "Inserir";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-sec">
+        <h4>Nova Consulta</h4>
+        <div class="container">
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info bntCustom" data-toggle="modal" data-target="#myModal">Disponibilidades</button>
+            @Html.Partial("DatasDisponiveis")
+
+        </div>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if ((TempData["Erro"]) != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Html.Raw(TempData["Erro"])
+            </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDPaciente, "Paciente", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDPaciente", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDPaciente, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDMedico, "Médico", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDMedico", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDMedico, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control jqueryui-maker-datepicker", placeholder = "dd/mm/aaaa" } })
+                @{
+                    if (TempData["DataInvalida"] != null)
+                    {
+                        <text> A data inserida não é válida. </text>
+                    }
+                }
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <label class="control-label col-md-10">
+
+            @Html.CheckBoxFor(m => m.EnviaEmail, false)
+            Enviar E-mail de confirmação
+        </label>
+
+        <div class="form-group">
+            @Html.Label("Email Paciente", htmlAttributes: new { @name = "LabelPaciente", @class = "control-label col-md-4" })
+            <div class="col-md-10">
+
+                @Html.TextBox("EmailPaciente", null, " ", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Time, "Horário", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+
+                @Html.DropDownListFor(model => model.Time, Giori_Consul.Models.ListaHorarios.getHorarios(), " ", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-md-8">
+                <button type="submit" value="Create" class="btn btn-primary btnEnviar">Salvar</button>
+                @Html.ActionLink("Cancelar ", "Index", null, new { @class = "btn btn-danger bntCustom" })
+            </div>
+        </div>
+    </div>
+}
+@Html.Partial("~/Views/Shared/_CssDefaultCrudView.cshtml")
+<script>
+    $(document).ready(function () {
+
+        var check = $('#EnviaEmail').is(':checked');
+        if (check == false) {
+            $('[name="EmailPaciente"]').hide();
+            $('[name="LabelPaciente"]').hide();
+        }
+    });
+    $('[name="EnviaEmail"]').change(function () {
+        $('[name="EmailPaciente"]').toggle(100);
+        $('[name="LabelPaciente"]').toggle(100);
+    });
+</script>

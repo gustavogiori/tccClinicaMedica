@@ -1,0 +1,35 @@
+﻿@model Giori_Consul.Models.Usuario
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_layout.cshtml"; 
+}
+    <div class="login-form">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <h2 class="text-center">Log in</h2>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.UserId, new { required = "required", placeholder = "Login", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { required = "required", placeholder = "Senha", @class = "form-control" })
+            </div>
+            if ((TempData["Erro"]) != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @Html.Raw(TempData["Erro"])
+                </div>
+
+            }
+            <div class="form-group">
+                <button type="submit" value="Proceed" class="btn btn-primary btn-block">Log in</button>
+            </div>
+        }
+
+    </div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

@@ -1,0 +1,58 @@
+﻿@model Giori_Consul.Models.Consulta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Consulta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Medico.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paciente.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paciente.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cancelada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cancelada)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IDConsulta }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>

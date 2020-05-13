@@ -1,0 +1,193 @@
+﻿@using Giori_Consul.Security;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Giori Consul</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- jquery -->
+    <link href="~/Content/multiselect.css" rel="stylesheet" />
+    <script src="~/Content/multiselect.min.js"></script>
+    <style>
+        /* example of setting the width for multiselect */
+        #testSelect1_multiSelect {
+            width: 200px;
+        }
+    </style>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- [/] jquery -->
+    <!-- bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- [/] bootstrap -->
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        .login-form {
+            width: 340px;
+            margin: 50px auto;
+        }
+
+        .navbar-nav > li > a {
+            color: red;
+        }
+
+        .btnEnviar,.bntCustom {
+            min-width: 135px !important;
+            height: 38px !important;
+        }
+
+
+        .field-validation-error {
+            color: #ff0000;
+        }
+
+        .login-form form {
+            margin-bottom: 15px;
+            background: #f7f7f7;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        .login-form h2 {
+            margin: 0 0 15px;
+        }
+
+        .form-control, .btn {
+            min-height: 38px;
+            border-radius: 2px;
+        }
+
+        .btn {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Giori Consul", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    @{
+                        var user = (User as ICustomPrincipal);
+                        int roleId = -1;
+                        if (user != null)
+                        {
+                            roleId = user.RoleId;
+                        }
+                        RoleEnum roleEnum = (RoleEnum)roleId;
+
+                        if (roleEnum == RoleEnum.Secretaria || roleEnum == RoleEnum.Admin)
+                        {
+                            <li>@Html.ActionLink("Início", "Index", "Home")</li>
+                        }
+                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico || roleEnum == RoleEnum.Secretaria)
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Cadastros
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @{
+                                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Secretaria || roleEnum == RoleEnum.Medico)
+                                        {
+                                            <li>@Html.ActionLink("Consultas", "Index", "Consultas", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Admin)
+                                        {
+                                            <li>@Html.ActionLink("Médico", "Index", "Medicos", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Admin)
+                                        {
+                                            <li>@Html.ActionLink("Secretaria", "Index", "Secretarias", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico)
+                                        {
+                                            <li>@Html.ActionLink("Pacientes", "Index", "Pacientes", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico)
+                                        {
+                                            <li>@Html.ActionLink("Medicamento", "Index", "Medicamentos", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico || roleEnum == RoleEnum.Secretaria)
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Pacientes
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @{
+                                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico)
+                                        {
+                                            <li>@Html.ActionLink("Exames", "Index", "Exames", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Medico || roleEnum == RoleEnum.Secretaria)
+                                        {
+                                            <li>@Html.ActionLink("Resultados de Exames", "Index", "ExamesRealizados", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico)
+                                        {
+                                            <li>@Html.ActionLink("Receitas", "Index", "ReceitaMedica", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                        if (roleEnum == RoleEnum.Admin || roleEnum == RoleEnum.Medico || roleEnum == RoleEnum.Secretaria)
+                                        {
+                                            <li>@Html.ActionLink("Consultas", "Index", "Consultas", null, htmlAttributes: new { @class = "menuCadastro" })</li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p id="copy">&copy; @DateTime.Now.Year - Giori Consul</p>
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <!-- CSS Includes -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.min.css">
+    <!-- JS includes -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.16.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.min.js"></script>

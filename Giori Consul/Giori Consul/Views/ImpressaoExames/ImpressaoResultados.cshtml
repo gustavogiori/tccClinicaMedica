@@ -1,0 +1,61 @@
+﻿@model Giori_Consul.Models.ExamesRealizados
+@{
+    var textSolicitadoBreakLine = Model.Exames.ExamesSolicitados.Split('\n');
+    bool HasBreakLineExames = textSolicitadoBreakLine.Length > 0;
+    var textResultadosBreakLine = Model.Resultados.Split('\n');
+    bool HasBreakLineResultados = textSolicitadoBreakLine.Length > 0;
+}
+<br />
+<h2>Data - @Model.DataRealizacao.ToShortDateString()</h2>
+<br />
+
+<p>
+    <strong> Código:</strong> @Model.IDExame<br />
+    <strong>Paciente:</strong> @Model.Exames.Pacientes.Nome
+    <br />
+    <strong>Exames:</strong>
+    <br />
+    @if (HasBreakLineExames)
+    {
+        foreach (var item in textSolicitadoBreakLine)
+        {
+            @item
+            <br />
+        }
+    }
+    else
+    {
+        @Model.Exames.ExamesSolicitados
+    }
+    <br />
+    <strong>Resultados:</strong>
+    <br />
+    @if (HasBreakLineResultados)
+    {
+        foreach (var item in textResultadosBreakLine)
+        {
+            @item
+            <br />
+        }
+    }
+    else
+    {
+        @Model.Resultados
+    }
+    <br />
+    <hr />
+    @Model.Exames.Medico.Nome<br />
+    @Model.Exames.Medico.Especialidade
+</p>
+
+
+
+<style>
+    p {
+        font-size: x-large;
+    }
+
+    #copy {
+        display: none;
+    }
+</style>

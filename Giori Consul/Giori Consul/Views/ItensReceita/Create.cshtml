@@ -1,0 +1,39 @@
+﻿@model Giori_Consul.Models.ItensReceita
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-sec">
+        <h4>ItensReceita</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDMedicamento, "IDMedicamento", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDMedicamento", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDMedicamento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDReceita, "IDReceita", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDReceita", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDReceita, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-md-8">
+                <button type="submit" value="Create" class="btn btn-primary btnEnviar">Salvar</button>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Partial("~/Views/Shared/_CssDefaultCrudView.cshtml")
+@Html.Partial("~/Views/ItensReceita/Index.cshtml")
+

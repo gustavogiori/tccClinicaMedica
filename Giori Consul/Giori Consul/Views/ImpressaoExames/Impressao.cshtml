@@ -1,0 +1,41 @@
+﻿@model Giori_Consul.Models.Exames
+@{
+    var textBreakLine = Model.ExamesSolicitados.Split('\n');
+    bool resultadoHasBreakLine = textBreakLine.Length > 0;
+}
+<h2>Data - @Model.DataPedido.Value.ToShortDateString()</h2>
+<br />
+
+<p>
+    <strong> Código:</strong> @Model.IDExame<br />
+    <strong>Paciente:</strong> @Model.Pacientes.Nome
+    <br />
+    <strong>Exames:</strong>
+    <br />
+    @if (resultadoHasBreakLine)
+    {
+        foreach (var item in textBreakLine)
+        {
+            @item
+            <br />
+        }
+    }
+    else
+    {
+        @Model.ExamesSolicitados
+    }
+    <br />
+    <hr />
+    @Model.Medico.Nome<br />
+    @Model.Medico.Especialidade
+</p>
+
+<br />
+<style>
+    p {
+        font-size: x-large;
+    }
+    #copy{
+        display:none;
+    }
+</style>

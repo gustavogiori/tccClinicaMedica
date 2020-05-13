@@ -1,0 +1,42 @@
+﻿@model Giori_Consul.Models.Medicamento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Medicamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeMedicamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeMedicamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeGenerico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeGenerico)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeFabricante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeFabricante)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>

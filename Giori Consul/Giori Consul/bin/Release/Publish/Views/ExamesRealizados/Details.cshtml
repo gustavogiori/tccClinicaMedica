@@ -1,0 +1,42 @@
+﻿@model Giori_Consul.Models.ExamesRealizados
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExamesRealizados</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Exames.ExamesSolicitados)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exames.ExamesSolicitados)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resultados)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resultados)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataRealizacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataRealizacao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

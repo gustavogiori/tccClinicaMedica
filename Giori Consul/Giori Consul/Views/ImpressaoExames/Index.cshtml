@@ -1,0 +1,44 @@
+﻿@model Giori_Consul.Models.Exames
+@{
+    var textBreakLine = Model.ExamesSolicitados.Split('\n');
+    bool resultadoHasBreakLine = textBreakLine.Length > 0;
+}
+<br />
+@{
+    string href = "/ImpressaoExames/Index?IdExame=" + Model.IDExame + "&pdf=true";
+    <i class="fa fa-file-pdf-o" aria-hidden="true"><a href=@href> Exportar para PDF</a></i>
+}
+<h2>Data - @Model.DataPedido.Value.ToShortDateString()</h2>
+<br />
+
+<p>
+    <strong> Código:</strong> @Model.IDExame<br />
+    <strong>Paciente:</strong> @Model.Pacientes.Nome
+    <br />
+    <strong>Exames:</strong>
+    <br />
+    @if (resultadoHasBreakLine)
+    {
+        foreach (var item in textBreakLine)
+        {
+            @item
+            <br />
+        }
+    }
+    else
+    {
+        @Model.ExamesSolicitados
+    }
+    <br />
+    <hr />
+    @Model.Medico.Nome<br />
+    @Model.Medico.Especialidade
+</p>
+
+
+
+<style>
+    p {
+        font-size: x-large;
+    }
+</style>

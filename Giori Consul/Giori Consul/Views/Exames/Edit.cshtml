@@ -1,0 +1,60 @@
+﻿@model Giori_Consul.Models.Exames
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-sec">
+        <h4>Editar Exame</h4>
+        <div class="form-group row">
+            <div class="col-md-8">
+                @Html.ActionLink("Imprimir Exame ", "Index", "ImpressaoExames", new { IdExame = Model.IDExame }, new { @class = "btn btn-primary bntCustom" })
+            </div>
+        </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDExame)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDPaciente, "Paciente", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDPaciente", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDPaciente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataPedido, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataPedido, new { htmlAttributes = new { @class = "form-control datepicker", @Value = Model.DataPedido.Value.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.DataPedido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDTipoExame, "Tipo Exame", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDTipoExame", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDPaciente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamesSolicitados, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.ExamesSolicitados, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamesSolicitados, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-8">
+                <button type="submit" value="Save" class="btn btn-primary btnEnviar">Salvar</button>
+                @Html.ActionLink("Cancelar ", "Index", null, new { @class = "btn btn-danger bntCustom" })
+            </div>
+        </div>
+    </div>
+}
+@Html.Partial("~/Views/Shared/_CssDefaultCrudView.cshtml")

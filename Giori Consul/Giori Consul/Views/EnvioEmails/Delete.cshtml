@@ -1,0 +1,64 @@
+﻿@model Giori_Consul.Models.EnvioEmail
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Realmente deseja deletar?</h3>
+<div>
+    <h4>EnvioEmail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Consulta.IDConsulta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consulta.IDConsulta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailDestino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailDestino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Texto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Enviado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Enviado)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Voltar", "Index")
+        </div>
+    }
+</div>

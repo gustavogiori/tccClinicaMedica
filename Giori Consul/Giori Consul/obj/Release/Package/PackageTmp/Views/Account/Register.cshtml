@@ -1,0 +1,45 @@
+﻿@model  Giori_Consul.Models.Usuario
+@using Giori_Consul.Models;
+@using Giori_Consul.Security;
+<div class="login-form">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        var items = new List<SelectListItem>()
+{
+        new SelectListItem() { Text = RoleEnum.Admin.ToString(), Value = "0" },
+        new SelectListItem() { Text = RoleEnum.Medico.ToString(), Value = "1" },
+        new SelectListItem() { Text = RoleEnum.Secretaria.ToString(), Value = "2" },
+    };
+        var user = (User as ICustomPrincipal);
+        int roleId = -1;
+        if (user != null)
+        {
+            roleId = user.RoleId;
+        }
+        RoleEnum roleEnum = (RoleEnum)roleId;
+        <h2 class="text-center">Register</h2>
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.UserId, new { required = "required", placeholder = "Email", @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.UserName, new { required = "required", placeholder = "Nome", @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { required = "required", placeholder = "Senha", @class = "form-control" })
+        </div>
+        if (roleEnum == RoleEnum.Admin)
+        {
+            <div class="form-group">
+                @Html.DropDownList("RoleId", items, "Nível de usuário", new { @class = "form-control" })
+            </div>
+        }
+        <div class="form-group">
+            <button type="submit" value="Create" class="btn btn-primary btn-block">Log in</button>
+        </div>
+
+    }
+
+</div>

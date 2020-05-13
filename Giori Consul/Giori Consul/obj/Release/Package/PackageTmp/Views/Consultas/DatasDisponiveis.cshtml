@@ -1,0 +1,80 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Datas disponiveis</h4>
+            </div>
+            <div class="modal-body">
+
+                @Html.Label("Data Agenda:")
+                @Html.TextBox("Data", DateTime.Now.ToString("yyyy-MM-dd"), new { type = "date", @class = "form-control" })
+
+                @Html.Label("Médico")
+                @Html.DropDownList("IDMedico", null, htmlAttributes: new { @class = "form-control" })
+
+
+                @Html.Label("Horário")
+                @Html.DropDownList("Horarios", null, htmlAttributes: new { @class = "form-control" })
+                <button id="btnBusca" type="submit" class="btn btn-primary" value="DatasDisponiveis">Buscar</button>
+
+
+                <br />
+                <h3>Disponibilidades</h3>
+
+                <table id="records_table" class="table table-striped table-bordered table-list">
+                    <thead>
+                        <tr>
+                            <th>
+                                Data
+                            </th>
+
+                            <th class="hidden-xs">
+                                Médico
+                            </th>
+
+                            <th>
+                                Hora
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#records_table tbody > tr').remove();
+    });
+    $("#btnBusca").click(function () {
+        var idMedico = $('#IDMedico').val();
+        var horario = $('#Horarios').val();
+        var data = $('#Data').val();
+        var trHTML = '';
+        $('#records_table tbody > tr').remove();
+        $.ajax({
+            url: '/Consultas/DatasDisponiveis?IDMedico=' + idMedico + "&" + "Horarios=" + horario + "&" + "Data=" + data,
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    trHTML += '<tr><td>' + item.Data +
+                        '</td><td class="hidden-xs">' + item.Medico +
+                        '</td><td>' + item.Horario
+                });
+                $('#records_table').append(trHTML);
+            }
+        })
+    })
+</script>

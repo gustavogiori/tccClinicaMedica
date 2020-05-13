@@ -1,0 +1,61 @@
+﻿@model Giori_Consul.Models.HistoricosClinicos
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-sec">
+    <h4>Historicos Clinicos</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdsMedicamentos, "Medicamentos", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(v => v.IdsMedicamentos,
+            ViewBag.IDMedicamento as MultiSelectList,
+            new { @class = "multiselect form-control", multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.IdsMedicamentos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdsExames, "Exames", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(v => v.IdsExames,
+            ViewBag.IDExames as MultiSelectList,
+            new { @class = "multiselect form-control", multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.IdsExames, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdsExamesRealizados, "Exames Realizados", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(v => v.IdsExamesRealizados,
+            ViewBag.IDExamesRealizados as MultiSelectList,
+            new { @class = "multiselect form-control", multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.IdsExamesRealizados, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Observacao, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Observacao, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-8">
+            <button type="submit" value="Create" class="btn btn-primary btnEnviar">Salvar</button>
+            @Html.ActionLink("Cancelar ", "Index", null, new { @class = "btn btn-danger bntCustom" })
+        </div>
+    </div>
+
+</div>
+
+}
+
+@Html.Partial("~/Views/Shared/_CssDefaultCrudView.cshtml")
